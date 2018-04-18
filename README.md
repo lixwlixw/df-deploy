@@ -24,17 +24,12 @@ dns x 1
 ```     
 2. Ensuring Host Access
 ```
-   ssh-keygen -t rsa
-   
-   for host in master1 \
+   ssh-keygen -t rsa  
+   for i in master1 \
     master2 \
     master3 \
     xxxxxx ; \
-    do ssh-copy-id -i ~/.ssh/id_rsa.pub $host; \
+    do ssh-copy-id -i $i; \
     done
 ```     
-  3 配置机器互信
-     控制机生成key文件 ssh-keygen -t rsa
-     配置控制机和其他机器互信  ssh-copy-id root@IP
-
-  4 通过ansible 给所有机器配置yum客户端文件
+3. Use Ansible Configuration Host
