@@ -3,18 +3,16 @@
 # 一.Planning
 master*3  
 etcd*3  
-
 lb*1  
-
-node*N  
-origin-1.2*1 
-service-brokers etcd *1
-glusterfs*2 
-heketi*1 
-nfs*1 
+node*3  
+origin-1.2*1  
+service-brokers etcd *1  
+glusterfs*2  
+heketi*1  
+nfs*1  
 yum mirror*1  
-docker mirror*1
-dns*1 
+docker mirror*1  
+dns*1  
 
 
 # 二. Preparation
