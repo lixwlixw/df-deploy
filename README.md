@@ -1,6 +1,5 @@
-# df-deploy
-#内网环境OCDF部署
-# 一.Planning
+# DF-Deploy
+## 一.Planning
 master x 3   
 etcd x 3    
 lb x 1    
@@ -15,10 +14,10 @@ docker mirror x 1
 dns x 1     
 
 
-# 二. Preparation
+## 二. Preparation
     
 1. Install Yum Repository   
-               service httpd start    
+   service httpd start    
      
   2 给机器配置本地yum源
      
