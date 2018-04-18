@@ -1,6 +1,6 @@
 # df-deploy
 #内网环境OCDF部署
-# 一 规划集群
+# 一 Planning
 master*3  
 etcd*3 
 lb*1 
