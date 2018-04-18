@@ -1,18 +1,18 @@
 # df-deploy
 #内网环境OCDF部署
 # 一.Planning
-master*3  
-etcd*3  
-lb*1  
-node*3  
-origin-1.2*1  
-service-brokers etcd *1  
-glusterfs*2  
-heketi*1  
-nfs*1  
-yum mirror*1  
-docker mirror*1  
-dns*1  
+masterx3  
+etcdx3  
+lbx1  
+nodex3  
+origin-1.2x1  
+service-brokers-etcdx1  
+glusterfsx2  
+heketix1  
+nfsx1  
+yum mirrorx1  
+docker mirrorx1  
+dnsx1  
 
 
 # 二. Preparation
