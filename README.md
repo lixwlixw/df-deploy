@@ -17,11 +17,8 @@ dns x 1
 
 # 二. Preparation
     
-  1 搭建yum 仓库
-     安装httpd服务
-     把准备的yum源放到/var/www/html/ 下
-     createrepo /var/www/html/xxx
-     service httpd start    
+1 install yum mirror
+  service httpd start    
      
   2 给机器配置本地yum源
      
