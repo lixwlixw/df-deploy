@@ -1,9 +1,11 @@
 # df-deploy
 #内网环境OCDF部署
 # 一.Planning
-master*3 
-etcd*3 
-lb*1 
+master*3  
+etcd*3  
+
+lb*1  
+
 node*N  
 origin-1.2*1 
 service-brokers etcd *1
