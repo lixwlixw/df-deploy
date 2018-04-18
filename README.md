@@ -1,19 +1,19 @@
 # df-deploy
-内网环境OCDF部署
-一 规划集群
+#内网环境OCDF部署
+# 一 规划集群
 master*3  
 etcd*3 
- lb*1 
-     node*N  
-     origin-1.2*1 
-     service-brokers etcd *1
-     glusterfs*2 
-     heketi*1 
-     nfs*1 
-     yum mirror*1  
-     docker mirror*1
-     dns * 1 
-  ps(组件可以混装 具体看现场分配机器资源情况 )
+lb*1 
+node*N  
+origin-1.2*1 
+service-brokers etcd *1
+glusterfs*2 
+heketi*1 
+nfs*1 
+yum mirror*1  
+docker mirror*1
+dns * 1 
+ps(组件可以混装 具体看现场分配机器资源情况 )
 
 二 安装openshift集群
     
