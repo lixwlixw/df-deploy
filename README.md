@@ -16,9 +16,12 @@ dns x 1
 
 ## 二. Preparation
     
-1. Install Yum Repository   
-   service httpd start    
-     
+1. Install Yum Repository  
+```
+   tar -xf yumrepo.tar -C /var/www/html/
+   service httpd start
+   createrepo /var/www/html/xxxx
+```     
   2 给机器配置本地yum源
      
      
