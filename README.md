@@ -25,8 +25,7 @@ dns x 1
 2. Ensuring Host Access
 ```
    ssh-keygen -t rsa
-```
-```
+   
    for host in master1 \
     master2 \
     master3 \
