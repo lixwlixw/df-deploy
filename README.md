@@ -1,7 +1,7 @@
 # df-deploy
 #内网环境OCDF部署
 # 一.Planning
-master*3  
+master*3 
 etcd*3 
 lb*1 
 node*N  
@@ -12,7 +12,7 @@ heketi*1
 nfs*1 
 yum mirror*1  
 docker mirror*1
-dns * 1 
+dns*1 
 
 
 # 二. Preparation
