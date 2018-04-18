@@ -13,9 +13,9 @@ nfs*1
 yum mirror*1  
 docker mirror*1
 dns * 1 
-ps(组件可以混装 具体看现场分配机器资源情况 )
 
-二 安装openshift集群
+
+# 二. Preparation
     
   1 搭建yum 仓库
      安装httpd服务
