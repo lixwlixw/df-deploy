@@ -17,7 +17,8 @@ dns x 1
 
 # 二. Preparation
     
-1 install yum mirror
+1 Install Yum Repository   
+
   service httpd start    
      
   2 给机器配置本地yum源
