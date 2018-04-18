@@ -1,7 +1,7 @@
 # df-deploy
 #内网环境OCDF部署
 # 一.Planning
-master x 3       
+master x 3   
 etcd x 3    
 lb x 1    
 node x 3  
