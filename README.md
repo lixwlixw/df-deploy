@@ -22,9 +22,18 @@ dns x 1
    service httpd start
    createrepo /var/www/html/xxxx
 ```     
-  2 给机器配置本地yum源
-     
-     
+2. Ensuring Host Access
+```
+   ssh-keygen -t rsa
+```
+```
+   for host in master1 \
+    master2 \
+    master3 \
+    xxxxxx ; \
+    do ssh-copy-id -i ~/.ssh/id_rsa.pub $host; \
+    done
+```     
   3 配置机器互信
      控制机生成key文件 ssh-keygen -t rsa
      配置控制机和其他机器互信  ssh-copy-id root@IP
