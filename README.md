@@ -19,8 +19,10 @@ dns x 1
 1. Install Yum Repository  
 ```
    tar -xf yumrepo.tar -C /var/www/html/
+   
+   createrepo /var/www/html/base/
+   createrepo /var/www/html/xxxx/
    service httpd start
-   createrepo /var/www/html/xxxx
 ```     
 2. Ensuring Host Access
 ```
