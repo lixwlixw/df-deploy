@@ -47,7 +47,7 @@ osm_etcd_image=10.1.1.x:5000/openshift/etcd
 #openshift_disable_check=memory_availability,disk_availability,docker_storage,docker_image_availability,docker_storage_driver,package_version,package_availability,package_update
 openshift_disable_check=memory_availability,disk_availability,docker_storage,docker_image_availability,package_version
 openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['250'], 'image-gc-high-threshold': ['80'], 'image-gc-low-threshold': ['70']}
-openshift_master_default_subdomain=app.dataos.io
+openshift_master_default_subdomain=xxx.xxx.com
 
 #metrics
 openshift_hosted_metrics_deploy=true
@@ -60,7 +60,7 @@ openshift_hosted_logging_es_cluster_size=1
 openshift_hosted_logging_deployer_prefix=10.1.1.x:5000/openshift/origin-
 openshift_hosted_logging_deployer_version=v3.6.0
 openshift_hosted_logging_master_public_url=https://10.1.1.x:8443
-openshift_hosted_logging_hostname=xxx.xxx.dataos.io
+openshift_hosted_logging_hostname=xxx.xxx.com
 
 # host group
 [masters]
