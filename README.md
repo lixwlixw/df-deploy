@@ -43,6 +43,7 @@ baseurl=http://10.1.1.x/base
 enabled=1
 gpgcheck=0
 
+yum -y install ansible docker
 ansible -i hosts-list all -s -m copy -a "src=/etc/yum.repos.d/local.repo dest=/etc/yum.repos.d/local.repo"
 ansible -i hosts-list all -s -m shell -a "systemctl disable firewalld"
 ansible -i hosts-list all -s -m shell -a "systemctl stop firewalld"
