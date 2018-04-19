@@ -54,11 +54,29 @@ ansible -i hosts-list all -s -m shell -a "yum install -y docker-1.12.6"
 ansible -i hosts-list all -s -m shell -a "systemctl start docker"
 ansible -i hosts-list all -s -m shell -a "systemctl enable docker"
 ```
-4. Install Docker Repository
+4. Install Configuration Docker Repository
 ```
 docker run -d -p 5000:5000 registry:2
 tar xf docker-images.tar
 cd docker-images/
 for i in `ll|awk '{print $9}'`; do docker load < $i; done
-
+docker images |grep"dataos.io"|awk '{print "docker tag "$3""$1":"$2}'| \
+  sed-e s/registry.new.dataos.io/10.1.1.x:5000/| \
+ xargs -i bash -c "{}"
+docker images |grep "10.1.1.x:5000"| \
+  awk'{print "docker push "$1":"$2}'| \
+ xargs -i bash -c "{}"
+```
+5. Configuration Insecure-Registry
+```
+cat daemon.json
+{
+    "insecure-registries": [
+        "172.25.0.0/16",
+        "10.1.1.x:5000",
+        "docker-registry.default.svc:5000"
+    ]
+}
+ansible -i hosts-list all -s -m copy -a "/etc/docker/daemon.json dest=/etc/docker/daemon.json"
+ansible -i hosts-list all -s -m shell -a "systemctl restart docker"
 ```
