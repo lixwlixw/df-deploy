@@ -42,6 +42,12 @@ name=base
 baseurl=http://10.1.1.x/base
 enabled=1
 gpgcheck=0
-
 ansible -i hosts-list all -s -m copy -a "src=/etc/yum.repos.d/local.repo dest=/etc/yum.repos.d/local.repo"
+
+ansible -i hosts-list all -s -m shell -a "systemctl disable firewalld"
+ansible -i hosts-list all -s -m shell -a "systemctl stop firewalld"
+ansible -i hosts-list all -s -m shell -a "setenforce 0"
+ansible -i hosts-list all -s -m shell -a "sed -i 's/^SELINUX=.*/SELINUX=permissive/' /etc/selinux/config"
+ansible -i hosts-list all -s -m shell -a "yum install -y docker wget git net-tools bind-utils iptables-services bridge-utilsbash-completion kexec-tools sos psacct vim lrzsz python-setuptools"
+ansible -i hosts-list all -s -m shell -a "reboot"
 ```
