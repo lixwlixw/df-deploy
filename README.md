@@ -81,3 +81,14 @@ cat /etc/docker/daemon.json
 ansible -i hosts-list all -s -m copy -a "/etc/docker/daemon.json dest=/etc/docker/daemon.json"
 ansible -i hosts-list all -s -m shell -a "systemctl restart docker"
 ```
+6. Configuration Docker Storage
+```
+ansible -i hosts-list node -s -m shell -a "pvcreate /dev/xxx"
+ansible -i hosts-list node -s -m shell -a "vgcreate vgdocker /dev/xxx"
+ansible -i hosts-list node -s -m shell -a "lvcreate -L 100G -n lvdocker vgdocker"
+ansible -i hosts-list node -s -m shell -a "mkfs -t xfs /dev/mapper/vgdocker-lvdocker"
+ansible -i hosts-list node -s -m shell -a "mount /dev/mapper/vgdocker-lvdocker /var/lib/docker"
+ansible -i hosts-list node -s -m shell -a "echo '/dev/mapper/vgdocker-lvdocker /var/lib/docker xfs defaults 0 0' >> /etc/fstab" 
+ansible -i hosts-list node -s -m shell -a "service docker restart"
+```
+
