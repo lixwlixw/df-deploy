@@ -36,5 +36,12 @@ for i in master1 \
 ```     
 3. Use Ansible Configuration Host
 ```
-   
+cat /etc/yum.repos.d/local.repo
+[base]
+name=base
+baseurl=http://10.1.1.x/base
+enabled=1
+gpgcheck=0
+
+ansible -i hosts-list all -s -m copy -a "src=/etc/yum.repos.d/local.repo dest=/etc/yum.repos.d/local.repo"
 ```
