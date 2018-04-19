@@ -69,7 +69,7 @@ docker images |grep "10.1.1.x:5000"| \
 ```
 5. Configuration Insecure-Registry
 ```
-cat daemon.json
+cat /etc/docker/daemon.json
 {
     "insecure-registries": [
         "172.25.0.0/16",
