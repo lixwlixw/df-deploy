@@ -11,18 +11,18 @@ heketi x 1
 nfs x 1    
 yum mirror x 1    
 docker mirror x 1    
-dns x 1     
+dns x 1   
 
 
 ## 二. Preparation
     
 1. Install Yum Repository  
 ```
-   tar -xf yumrepo.tar -C /var/www/html/
+tar -xf yumrepo.tar -C /var/www/html/
    
-   createrepo /var/www/html/base/
-   createrepo /var/www/html/xxxx/
-   service httpd start
+createrepo /var/www/html/base/
+createrepo /var/www/html/xxxx/
+service httpd start
 ```     
 2. Ensuring Host Access
 ```
@@ -35,3 +35,6 @@ dns x 1
     done
 ```     
 3. Use Ansible Configuration Host
+```
+   
+```
