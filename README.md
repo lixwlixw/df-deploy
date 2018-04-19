@@ -26,13 +26,13 @@ service httpd start
 ```     
 2. Ensuring Host Access
 ```
-   ssh-keygen -t rsa  
-   for i in master1 \
-    master2 \
-    master3 \
-    xxxxxx ; \
-    do ssh-copy-id -i $i; \
-    done
+ssh-keygen -t rsa  
+for i in master1 \
+ master2 \
+ master3 \
+ xxxxxx ; \
+ do ssh-copy-id -i $i; \
+ done
 ```     
 3. Use Ansible Configuration Host
 ```
