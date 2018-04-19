@@ -91,4 +91,4 @@ ansible -i hosts-list node -s -m shell -a "mount /dev/mapper/vgdocker-lvdocker /
 ansible -i hosts-list node -s -m shell -a "echo '/dev/mapper/vgdocker-lvdocker /var/lib/docker xfs defaults 0 0' >> /etc/fstab" 
 ansible -i hosts-list node -s -m shell -a "service docker restart"
 ```
-
+## 三.install
