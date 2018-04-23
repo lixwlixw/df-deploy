@@ -1,0 +1,144 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: web-console
+  name: web-console
+spec:
+  replicas: 1
+  selector:
+    app: web-console
+    deploymentconfig: web-console
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+      creationTimestamp: null
+      labels:
+        app: web-console
+        deploymentconfig: web-console
+    spec:
+      containers:
+      - env:
+        - name: API_SERVER_ADDR
+          value: 10.1.1.x:443
+        - name: API_METRICS_ADDR
+          value: 172.25.xxx.xxx
+        - name: ROUTER_DOMAIN_SUFFIX
+          value: .app.xxx.com
+        - name: API_GITTER_ADDR
+          value: 172.25.xxx.xxx:7000
+        - name: WEBHOOK_PREFIX
+          value: https://xxx.xxx.com
+        - name: REGISTRY_PRIVATE_ADDR
+          value: docker-registry.default.svc:5000
+        - name: API_VOLUME_ADDR
+          value: 172.25.xxx.xxx:9095
+        - name: API_PROXY_ADDR
+          value: 172.25.xxx.xxx:8080
+        - name: REGISTRY_PUBLIC_ADDR
+          value: xxx.xxx.com
+        - name: APIS_PRD_ADDR
+          value: 10.1.1.x:443
+        - name: INTERNAL_REGISTRY_ADDR
+          value: docker-registry.default.svc:5000
+        image: 10.1.1.x:5000/openshift/web-console:latest
+        imagePullPolicy: Always
+        name: web-console
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      - env:
+        - name: MESSAGE_SENDER_ADMIN
+          value: admin
+        - name: DATAFOUNDRY_HOST_ADDR
+          value: https://10.1.1.1.x:443
+        - name: DATAFOUNDRY_ADMIN_USER
+          value: username
+        - name: DATAFOUNDRY_ADMIN_PASS
+          value: "password"
+        - name: DATAFOUNDRY_APISERVER_ADDR
+          value: 10.1.1.x:443
+        - name: DATAFOUNDRY_APISERVER_AWS_ADDR
+          value: 10.1.1.1x:443
+        image: xxx.xxx.xxx.xxx:5000/datafoundry/proxy
+        imagePullPolicy: Always
+        name: proxy
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+  
+  ---
+  
+  apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: web-console
+  name: web-console
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: web-console
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+  
+  ---
+  
+  apiVersion: v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  name: web-console
+spec:
+  host: xxx.xxx.xxx.com
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: web-console
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: 2018-03-28T06:39:00Z
+      status: "True"
+      type: Admitted
+    host: xxx.xxx.xxx.com
+    routerName: router
+    wildcardPolicy: None
