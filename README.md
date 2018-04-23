@@ -95,8 +95,10 @@ ansible -i hosts-list node -s -m shell -a "service docker restart"
 ```
 ansible-playbook -i hosts openshift-ansible/playbooks/byo/config.yml
 ```
-## 四. Install Brokers-Server
+## 四. Install Brokers-Server、Datafoundry-web
 ```
+oc create -f datafoundryweb.yaml
+oc create -f
 docker run -d -p 8443:8443 --name "openshift-origin" \
  --privileged --net=host \
 -v /:/rootfs:ro -v /var/run:/var/run:rw -v /sys:/sys:ro -v /var/lib/docker:/var/lib/docker:rw \
