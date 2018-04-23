@@ -95,3 +95,11 @@ ansible -i hosts-list node -s -m shell -a "service docker restart"
 ```
 ansible-playbook -i hosts openshift-ansible/playbooks/byo/config.yml
 ```
+## 四. Install Brokers-Server
+```
+docker run -d -p 8443:8443 --name "openshift-origin" \
+ --privileged --net=host \
+-v /:/rootfs:ro -v /var/run:/var/run:rw -v /sys:/sys:ro -v /var/lib/docker:/var/lib/docker:rw \
+registry.dataos.io/openshift/ldp-origin:v1.1.6-ldp0.4.19 start
+
+```
