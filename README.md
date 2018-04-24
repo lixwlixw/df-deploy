@@ -98,7 +98,7 @@ ansible-playbook -i hosts openshift-ansible/playbooks/byo/config.yml
 ```
 ## 四. Install Components
 
-1. start the datafoundryweb
+1. Start The DataFoundryWeb
 ```
 oc new-project datafoundry
 oc create -f datafoundry/datafoudrygitter.yaml
@@ -107,12 +107,12 @@ oc create -f datafoundry/datafoundryvolume.yaml
 oc create -f datafoundry/datafoundryweb.yaml
 ```
 
-2. start the service-broker container
+2. Start The Service-Broker Container
 ```
 oc new-project service-brokers
 oc create -f datafoundry/service-brokers.yaml
 ```      
-3. start the etcd service
+3. Start The Etcd Service
 ```
 docker run -d -p 2380:2380 -p 2379:2379 \
  --name etcd 10.1.1.x:5000/coreetcd/etcd:v2.3.7 \
@@ -125,7 +125,7 @@ docker run -d -p 2380:2380 -p 2379:2379 \
  -initial-cluster etcd0=http://10.1.1.x:2380 \
  -initial-cluster-state new
 ```     
-4. configuration etcd login and permissions      
+4. Configuration Etcd Login And Permissions      
 If you want to know etcd.sh. Please see https://github.com/lileitongxue/ETCD.git
 ```
 yum -y install etcd
@@ -137,7 +137,7 @@ etcdctl auth enable
 etcdctl -u username:password role revoke guest --path '/*' -readwrite
 sh -x etcd.sh
 ```       
-5. start the origin1.2 and create servicebrokers in openshift
+5. Start The Origin1.2 And Create ServiceBrokers In OpenShift
 ```
 docker run -d -p 8443:8443 --name "openshift-origin" \
  --privileged --net=host \
