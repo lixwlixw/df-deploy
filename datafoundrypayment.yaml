@@ -1,0 +1,95 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    dadafoundry.io/last-replicas: "1"
+    openshift.io/deployment.cancelled: "3"
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: datafoundrypayment
+  name: datafoundrypayment
+spec:
+  replicas: 1
+  selector:
+    app: datafoundrypayment
+    deploymentconfig: datafoundrypayment
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/container.datafoundrypayment.image.entrypoint: '["/bin/bash"]'
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: datafoundrypayment
+        deploymentconfig: datafoundrypayment
+    spec:
+      containers:
+      - env:
+        - name: ENV_MARKET_HOST
+          value: DATAFOUNDRYPLAN_SERVICE_HOST
+        - name: ENV_MARKET_PORT
+          value: DATAFOUNDRYPLAN_SERVICE_PORT
+        - name: ENV_CHECKOUT_HOST
+          value: DATAFOUNDRYSERVICEUSAGE_SERVICE_HOST
+        - name: ENV_CHECKOUT_PORT
+          value: DATAFOUNDRYSERVICEUSAGE_SERVICE_PORT
+        - name: ENV_BALANCE_HOST
+          value: DATAFOUNDRYRECHARGE_SERVICE_HOST
+        - name: ENV_BALANCE_PORT
+          value: DATAFOUNDRYRECHARGE_SERVICE_PORT
+        - name: ENV_COUPON_HOST
+          value: DATAFOUNDRYCOUPON_SERVICE_HOST
+        - name: ENV_COUPON_PORT
+          value: DATAFOUNDRYCOUPON_SERVICE_PORT
+        - name: ENV_DATAINSTANCE_HOST
+          value: DATAFOUNDRYDATAINSTANCE_SERVICE_HOST
+        - name: ENV_DATAINSTANCE_PORT
+          value: DATAFOUNDRYDATAINSTANCE_SERVICE_PORT
+        - name: APISERVER_CN_NORTH_01
+          value: 10.1.234.34:443
+        - name: APISERVER_CN_NORTH_02
+          value: 10.1.234.34:443
+        - name: DATAFOUNDRY_ADMIN_PASS
+          value: "1234"
+        - name: DATAFOUNDRY_ADMIN_USER
+          value: hack
+        - name: ENV_INTEGRATION_HOST
+          value: DATAINTEGRATION_SERVICE_HOST
+        - name: ENV_INTEGRATION_PORT
+          value: DATAINTEGRATION_SERVICE_PORT
+        image: docker-registry.default.svc:5000/datafoundry/datafoundrypayment@sha256:a02b917bfe04357921a5ea7d5bbb21e785e8ed65607895ba2220c6555b039824
+        imagePullPolicy: Always
+        name: datafoundrypayment
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+status:
+  availableReplicas: 0
+  latestVersion: 0
+  observedGeneration: 0
+  replicas: 0
+  unavailableReplicas: 0
+  updatedReplicas: 0
