@@ -129,7 +129,7 @@ etcdctl -u username:password role revoke guest --path '/*' -readwrite
 
 sh -x etcd.sh
 ```
-Please see git clone  https://github.com/lileitongxue/ETCD.git
+If you want to know etcd.sh. Please see https://github.com/lileitongxue/ETCD.git
 
 ```
 docker run -d -p 8443:8443 --name "openshift-origin" \
