@@ -3,6 +3,8 @@ masters
 etcd
 nodes
 lb
+glusterfs
+nfs
 
 [OSEv3:vars]
 #login vm
@@ -85,7 +87,8 @@ openshift_hosted_logging_hostname=xxx.xxx.com
 10.1.1.x containerized=true openshift_docker_options="--log-driver json-file --log-opt max-size=3M --log-opt max-file=3" openshift_schedulable=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
 10.1.1.x containerized=true openshift_docker_options="--log-driver json-file --log-opt max-size=3M --log-opt max-file=3" openshift_schedulable=false openshift_hostname=10.1.1.x openshift_ip=10.1.1.x openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
 
-
+[nfs]
+10.1.1.x
 
 [glusterfs]
 10.1.1.x glusterfs_ip=10.1.1.x glusterfs_devices='[ "/dev/vdb" ]'
