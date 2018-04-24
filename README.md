@@ -100,8 +100,113 @@ ansible -i hosts-list node -s -m shell -a "service docker restart"
 ```
 ## 三. Install Openshift.
 openshift-ansible file address https://github.com/openshift/openshift-ansible/tree/release-3.6
+
 ```
 ansible-playbook -i hosts openshift-ansible/playbooks/byo/config.yml
+```
+hosts file example
+```
+[OSEv3:children]
+masters
+etcd
+nodes
+lb
+glusterfs
+
+[OSEv3:vars]
+#login vm
+ansible_ssh_user=ocdf
+ansible_become=true
+deployment_type=origin
+
+#openshift images url
+osm_image=10.1.1.x:5000/openshift/origin
+osn_image=10.1.1.x:5000/openshift/node
+osn_ovs_image=10.1.1.x:5000/openshift/openvswitch
+openshift_image_tag='v3.6.0'
+oreg_url=10.1.1.x:5000/openshift/origin-${component}:${version}
+
+#key time
+openshift_hosted_registry_cert_expire_days = 1825
+openshift_ca_cert_expire_days = 1825
+openshift_node_cert_expire_days = 1825
+openshift_master_cert_expire_days = 1825
+etcd_ca_default_days = 1825
+
+#cluster
+openshift_master_cluster_method=native
+openshift_master_cluster_hostname=10.1.1.x
+openshift_master_cluster_public_hostname=10.1.1.x
+openshift_master_api_port=8443
+openshift_master_console_port=8443
+osm_cluster_network_cidr=172.26.0.0/16
+openshift_portal_net=172.25.0.0/16
+osm_host_subnet_length=8
+enable_excluders=false
+#openshift_clock_enabled=true
+
+#etcd image
+osm_etcd_image=10.1.1.x:5000/openshift/etcd
+
+#check
+#openshift_disable_check=memory_availability,disk_availability,docker_storage,docker_image_availability,docker_storage_driver,package_version,package_availability,package_update
+openshift_disable_check=memory_availability,disk_availability,docker_storage,docker_image_availability,package_version
+openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['250'], 'image-gc-high-threshold': ['80'], 'image-gc-low-threshold': ['70']}
+openshift_master_default_subdomain=xxx.xxx.com
+
+#metrics
+openshift_hosted_metrics_deploy=true
+openshift_hosted_metrics_deployer_prefix=10.1.1.x:5000/openshift/origin-
+openshift_hosted_metrics_deployer_version=v3.6.0
+
+#logging
+openshift_hosted_logging_deploy=true
+openshift_hosted_logging_es_cluster_size=1
+openshift_hosted_logging_deployer_prefix=10.1.1.x:5000/openshift/origin-
+openshift_hosted_logging_deployer_version=v3.6.0
+openshift_hosted_logging_master_public_url=https://10.1.1.x:8443
+openshift_hosted_logging_hostname=xxx.xxx.com
+
+#glusterfs enable
+#glusterfs configuration
+openshift_storage_glusterfs_namespace=glusterfsdb 
+openshift_storage_glusterfs_name=storage
+openshift_storage_glusterfs_image=10.1.1.x:5000/gluster/gluster-centos
+openshift_storage_glusterfs_version=v3.6.0
+openshift_storage_glusterfs_block_image=10.1.1.x:5000/gluster/glusterblock-provisioner
+openshift_storage_glusterfs_block_version=v3.6.0
+openshift_storage_glusterfs_heketi_image=10.1.1.x:5000/heketi/heketi
+openshift_storage_glusterfs_heketi_version:v3.6.0
+
+# host group
+[masters]
+10.1.1.x containerized=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x
+10.1.1.x containerized=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x
+10.1.1.x containerized=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x
+
+[etcd]
+10.1.1.x containerized=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x
+10.1.1.x containerized=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x
+10.1.1.x containerized=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x
+
+[lb]
+10.1.1.x openshift_hostname=10.1.1.x openshift_ip=10.1.1.x
+
+[nodes]
+10.1.1.x containerized=true openshift_docker_options="--log-driver json-file --log-opt max-size=3M --log-opt max-file=3" openshift_schedulable=false openshift_hostname=10.1.1.x openshift_ip=10.1.1.x openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
+10.1.1.x containerized=true openshift_docker_options="--log-driver json-file --log-opt max-size=3M --log-opt max-file=3" openshift_schedulable=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+10.1.1.x containerized=true openshift_docker_options="--log-driver json-file --log-opt max-size=3M --log-opt max-file=3" openshift_schedulable=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+10.1.1.x containerized=true openshift_docker_options="--log-driver json-file --log-opt max-size=3M --log-opt max-file=3" openshift_schedulable=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
+10.1.1.x containerized=true openshift_docker_options="--log-driver json-file --log-opt max-size=3M --log-opt max-file=3" openshift_schedulable=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
+10.1.1.x containerized=true openshift_docker_options="--log-driver json-file --log-opt max-size=3M --log-opt max-file=3" openshift_schedulable=false openshift_hostname=10.1.1.x openshift_ip=10.1.1.x openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
+
+[glusterfs]
+10.1.1.x glusterfs_ip=10.1.1.x glusterfs_devices='[ "/dev/vdb" ]'
+10.1.1.x glusterfs_ip=10.1.1.x glusterfs_devices='[ "/dev/vdb" ]'
+10.1.1.x glusterfs_ip=10.1.1.x glusterfs_devices='[ "/dev/vdb" ]'
+
+#[new_nodes]
+#10.1.1.x containerized=true openshift_docker_options="--log-driver json-file --log-opt max-size=3M --log-opt max-file=3" openshift_schedulable=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
 ```
 ## 四. Install Components.
 
