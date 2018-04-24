@@ -58,13 +58,13 @@ spec:
         - name: ENV_DATAINSTANCE_PORT
           value: DATAFOUNDRYDATAINSTANCE_SERVICE_PORT
         - name: APISERVER_CN_NORTH_01
-          value: 10.1.234.34:443
+          value: 10.1.1.x:443
         - name: APISERVER_CN_NORTH_02
-          value: 10.1.234.34:443
+          value: 10.1.1.x:443
         - name: DATAFOUNDRY_ADMIN_PASS
-          value: "1234"
+          value: "password"
         - name: DATAFOUNDRY_ADMIN_USER
-          value: hack
+          value: username
         - name: ENV_INTEGRATION_HOST
           value: DATAINTEGRATION_SERVICE_HOST
         - name: ENV_INTEGRATION_PORT
