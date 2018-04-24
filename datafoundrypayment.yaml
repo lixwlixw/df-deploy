@@ -69,7 +69,7 @@ spec:
           value: DATAINTEGRATION_SERVICE_HOST
         - name: ENV_INTEGRATION_PORT
           value: DATAINTEGRATION_SERVICE_PORT
-        image: xxx.xxx.xxx.com:5000/datafoundry/datafoundrypayment:latest
+        image: 10.1.1.x:5000/datafoundry/datafoundrypayment:latest
         imagePullPolicy: Always
         name: datafoundrypayment
         ports:
@@ -93,3 +93,27 @@ status:
   replicas: 0
   unavailableReplicas: 0
   updatedReplicas: 0
+  
+  ---
+  
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: datafoundrypayment
+  name: datafoundrypayment
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: datafoundrypayment
+    deploymentconfig: datafoundrypayment
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+  
+ 
