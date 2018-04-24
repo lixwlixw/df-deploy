@@ -61,9 +61,11 @@ docker run -d -p 5000:5000 registry:2
 tar xf docker-images.tar
 cd docker-images/
 for i in `ll|awk '{print $9}'`; do docker load < $i; done
+
 docker images |grep"dataos.io"|awk '{print "docker tag "$3""$1":"$2}'| \
   sed-e s/registry.new.dataos.io/10.1.1.x:5000/| \
  xargs -i bash -c "{}"
+ 
 docker images |grep "10.1.1.x:5000"| \
   awk'{print "docker push "$1":"$2}'| \
  xargs -i bash -c "{}"
