@@ -108,13 +108,13 @@ oc create -f datafoundry/datafoundryweb.yaml
 ```
 
 2. Install Service-broker 
-start the service-broker container
+1)start the service-broker container
 ```
 oc new-project service-brokers
 oc create -f datafoundry/service-brokers.yaml
 ```
 
-start the etcd service
+3)start the etcd service
 ```
 docker run -d -p 2380:2380 -p 2379:2379 \
  --name etcd 10.1.1.x:5000/coreetcd/etcd:v2.3.7 \
@@ -128,7 +128,9 @@ docker run -d -p 2380:2380 -p 2379:2379 \
  -initial-cluster-state new
 ```
 
-configuration etcd login and permissions
+4)configuration etcd login and permissions
+  If you want to know etcd.sh. Please see https://github.com/lileitongxue/ETCD.git
+```
 yum -y install etcd
 etcdctl user add username << EOF
 password
@@ -138,9 +140,8 @@ etcdctl auth enable
 etcdctl -u username:password role revoke guest --path '/*' -readwrite
 sh -x etcd.sh
 ```
-If you want to know etcd.sh. Please see https://github.com/lileitongxue/ETCD.git
 
-start the origin1.2 and create servicebrokers in openshift
+ 5)start the origin1.2 and create servicebrokers in openshift
 ```
 docker run -d -p 8443:8443 --name "openshift-origin" \
  --privileged --net=host \
@@ -148,10 +149,8 @@ docker run -d -p 8443:8443 --name "openshift-origin" \
 registry.dataos.io/openshift/ldp-origin:v1.1.6-ldp0.4.19 start
 docker exec -it openshift-origin bash
 oc new-servicebroker etcd --username=xxx --password=xxx --url=http://servicebroker.xxx.com
-
-
 ```
-## Install DNS
+3. Install DNS
 ```
 yum -y install dnsmasq 
 echo "address=/xxx.com/10.1.1.x" > /etc/dnsmasq.d/address.conf
