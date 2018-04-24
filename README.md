@@ -19,14 +19,14 @@ dns x 1
 1. Install Yum Repository  
 ```
 tar -xf yumrepo.tar -C /var/www/html/
-   
 createrepo /var/www/html/base/
 createrepo /var/www/html/xxxx/
 service httpd start
 ```     
 2. Ensuring Host Access
 ```
-ssh-keygen -t rsa  
+ssh-keygen -t rsa
+
 for i in master1 \
  master2 \
  master3 \
@@ -44,6 +44,7 @@ enabled=1
 gpgcheck=0
 
 yum -y install ansible docker
+
 ansible -i hosts-list all -s -m copy -a "src=/etc/yum.repos.d/local.repo dest=/etc/yum.repos.d/local.repo"
 ansible -i hosts-list all -s -m shell -a "systemctl disable firewalld"
 ansible -i hosts-list all -s -m shell -a "systemctl stop firewalld"
@@ -58,8 +59,11 @@ ansible -i hosts-list all -s -m shell -a "systemctl enable docker"
 4. Install Configuration Docker Repository
 ```
 docker run -d -p 5000:5000 registry:2
-tar xf docker-images.tar
+
+tar -xf docker-images.tar
+
 cd docker-images/
+
 for i in `ll|awk '{print $9}'`; do docker load < $i; done
 
 docker images |grep"dataos.io"|awk '{print "docker tag "$3""$1":"$2}'| \
@@ -80,6 +84,7 @@ cat /etc/docker/daemon.json
         "docker-registry.default.svc:5000"
     ]
 }
+
 ansible -i hosts-list all -s -m copy -a "/etc/docker/daemon.json dest=/etc/docker/daemon.json"
 ansible -i hosts-list all -s -m shell -a "systemctl restart docker"
 ```
@@ -131,12 +136,15 @@ docker run -d -p 2380:2380 -p 2379:2379 \
 If you want to know etcd.sh. Please see https://github.com/lileitongxue/ETCD.git
 ```
 yum -y install etcd
+
 etcdctl user add username << EOF
 password
 EOF
 
 etcdctl auth enable
+
 etcdctl -u username:password role revoke guest --path '/*' -readwrite
+
 sh -x etcd.sh
 ```       
 5. Start The Origin1.2 And Create ServiceBrokers In OpenShift
@@ -145,12 +153,16 @@ docker run -d -p 8443:8443 --name "openshift-origin" \
  --privileged --net=host \
 -v /:/rootfs:ro -v /var/run:/var/run:rw -v /sys:/sys:ro -v /var/lib/docker:/var/lib/docker:rw \
 registry.dataos.io/openshift/ldp-origin:v1.1.6-ldp0.4.19 start
+
 docker exec -it openshift-origin bash
+
 oc new-servicebroker etcd --username=xxx --password=xxx --url=http://servicebroker.xxx.com
 ```       
 6. Install DNS
 ```
-yum -y install dnsmasq 
+yum -y install dnsmasq
+
 echo "address=/xxx.com/10.1.1.x" > /etc/dnsmasq.d/address.conf
+
 service dnsmasq start
 ```
