@@ -1,6 +1,7 @@
 # DF-Deploy
 ## 一. Planning
-master x 3   
+```
+master x 3 
 etcd x 3    
 lb x 1    
 node x 3  
@@ -12,8 +13,7 @@ nfs x 1
 yum mirror x 1    
 docker mirror x 1    
 dns x 1   
-
-
+```
 ## 二. Preparation
     
 1. Install Yum Repository  
