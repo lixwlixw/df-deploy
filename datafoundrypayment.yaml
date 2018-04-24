@@ -69,7 +69,7 @@ spec:
           value: DATAINTEGRATION_SERVICE_HOST
         - name: ENV_INTEGRATION_PORT
           value: DATAINTEGRATION_SERVICE_PORT
-        image: docker-registry.default.svc:5000/datafoundry/datafoundrypayment@sha256:a02b917bfe04357921a5ea7d5bbb21e785e8ed65607895ba2220c6555b039824
+        image: xxx.xxx.xxx.com:5000/datafoundry/datafoundrypayment:latest
         imagePullPolicy: Always
         name: datafoundrypayment
         ports:
