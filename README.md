@@ -92,10 +92,13 @@ ansible -i hosts-list node -s -m shell -a "echo '/dev/mapper/vgdocker-lvdocker /
 ansible -i hosts-list node -s -m shell -a "service docker restart"
 ```
 ## 三. Install Openshift
+openshift-ansible file address https://github.com/openshift/openshift-ansible/tree/release-3.6
 ```
 ansible-playbook -i hosts openshift-ansible/playbooks/byo/config.yml
 ```
-## 四. Install Datafoundry-web
+## 四. Install Components
+
+1. Install Datafoundry-web
 ```
 oc new-project datafoundry
 oc create -f datafoundry/datafoudrygitter.yaml
@@ -103,11 +106,16 @@ oc create -f datafoundry/datafoundrypayment.yaml
 oc create -f datafoundry/datafoundryvolume.yaml
 oc create -f datafoundry/datafoundryweb.yaml
 ```
-## 五. Install Brokers-Server
+
+2. Install Service-broker 
+start the service-broker container
 ```
 oc new-project service-brokers
 oc create -f datafoundry/service-brokers.yaml
+```
 
+start the etcd service
+```
 docker run -d -p 2380:2380 -p 2379:2379 \
  --name etcd 10.1.1.x:5000/coreetcd/etcd:v2.3.7 \
  -name etcd0 \
@@ -118,19 +126,21 @@ docker run -d -p 2380:2380 -p 2379:2379 \
  -initial-cluster-token etcd-cluster-1 \
  -initial-cluster etcd0=http://10.1.1.x:2380 \
  -initial-cluster-state new
+```
+
+configuration etcd login and permissions
 yum -y install etcd
 etcdctl user add username << EOF
 password
 EOF
 
 etcdctl auth enable
-
 etcdctl -u username:password role revoke guest --path '/*' -readwrite
-
 sh -x etcd.sh
 ```
 If you want to know etcd.sh. Please see https://github.com/lileitongxue/ETCD.git
 
+start the origin1.2 and create servicebrokers in openshift
 ```
 docker run -d -p 8443:8443 --name "openshift-origin" \
  --privileged --net=host \
