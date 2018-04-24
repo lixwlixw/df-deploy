@@ -98,7 +98,7 @@ ansible-playbook -i hosts openshift-ansible/playbooks/byo/config.yml
 ```
 ## 四. Install Components
 
-1. Install Datafoundry-web
+1. start the datafoundryweb
 ```
 oc new-project datafoundry
 oc create -f datafoundry/datafoudrygitter.yaml
@@ -107,13 +107,12 @@ oc create -f datafoundry/datafoundryvolume.yaml
 oc create -f datafoundry/datafoundryweb.yaml
 ```
 
-2. Install Service-broker      
-1)start the service-broker container
+2. start the service-broker container
 ```
 oc new-project service-brokers
 oc create -f datafoundry/service-brokers.yaml
 ```      
-3)start the etcd service
+3. start the etcd service
 ```
 docker run -d -p 2380:2380 -p 2379:2379 \
  --name etcd 10.1.1.x:5000/coreetcd/etcd:v2.3.7 \
@@ -126,7 +125,7 @@ docker run -d -p 2380:2380 -p 2379:2379 \
  -initial-cluster etcd0=http://10.1.1.x:2380 \
  -initial-cluster-state new
 ```     
-4)configuration etcd login and permissions      
+4. configuration etcd login and permissions      
 If you want to know etcd.sh. Please see https://github.com/lileitongxue/ETCD.git
 ```
 yum -y install etcd
@@ -138,7 +137,7 @@ etcdctl auth enable
 etcdctl -u username:password role revoke guest --path '/*' -readwrite
 sh -x etcd.sh
 ```       
-5)start the origin1.2 and create servicebrokers in openshift
+5. start the origin1.2 and create servicebrokers in openshift
 ```
 docker run -d -p 8443:8443 --name "openshift-origin" \
  --privileged --net=host \
@@ -147,7 +146,7 @@ registry.dataos.io/openshift/ldp-origin:v1.1.6-ldp0.4.19 start
 docker exec -it openshift-origin bash
 oc new-servicebroker etcd --username=xxx --password=xxx --url=http://servicebroker.xxx.com
 ```       
-3. Install DNS
+6. Install DNS
 ```
 yum -y install dnsmasq 
 echo "address=/xxx.com/10.1.1.x" > /etc/dnsmasq.d/address.conf
