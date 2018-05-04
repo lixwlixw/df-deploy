@@ -3,16 +3,13 @@ masters
 etcd
 nodes
 lb
+glusterfs
 
 [OSEv3:vars]
 #login vm
 ansible_ssh_user=ocdf
 ansible_become=true
 deployment_type=origin
-
-#glusterfs configuration
-#openshift_storage_glusterfs_namespace=glusterfsdb 
-#openshift_storage_glusterfs_name=storage
 
 #openshift images url
 osm_image=10.1.1.x:5000/openshift/origin
@@ -62,6 +59,17 @@ openshift_hosted_logging_deployer_version=v3.6.0
 openshift_hosted_logging_master_public_url=https://10.1.1.x:8443
 openshift_hosted_logging_hostname=xxx.xxx.com
 
+#glusterfs enable
+#glusterfs configuration
+openshift_storage_glusterfs_namespace=glusterfsdb 
+openshift_storage_glusterfs_name=storage
+openshift_storage_glusterfs_image=10.1.1.x:5000/gluster/gluster-centos
+openshift_storage_glusterfs_version=v3.6.0
+openshift_storage_glusterfs_block_image=10.1.1.x:5000/gluster/glusterblock-provisioner
+openshift_storage_glusterfs_block_version=v3.6.0
+openshift_storage_glusterfs_heketi_image=10.1.1.x:5000/heketi/heketi
+openshift_storage_glusterfs_heketi_version:v3.6.0
+
 # host group
 [masters]
 10.1.1.x containerized=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x
@@ -84,10 +92,10 @@ openshift_hosted_logging_hostname=xxx.xxx.com
 10.1.1.x containerized=true openshift_docker_options="--log-driver json-file --log-opt max-size=3M --log-opt max-file=3" openshift_schedulable=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
 10.1.1.x containerized=true openshift_docker_options="--log-driver json-file --log-opt max-size=3M --log-opt max-file=3" openshift_schedulable=false openshift_hostname=10.1.1.x openshift_ip=10.1.1.x openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
 
+[glusterfs]
+10.1.1.x glusterfs_ip=10.1.1.x glusterfs_devices='[ "/dev/vdb" ]'
+10.1.1.x glusterfs_ip=10.1.1.x glusterfs_devices='[ "/dev/vdb" ]'
+10.1.1.x glusterfs_ip=10.1.1.x glusterfs_devices='[ "/dev/vdb" ]'
+
 #[new_nodes]
 #10.1.1.x containerized=true openshift_docker_options="--log-driver json-file --log-opt max-size=3M --log-opt max-file=3" openshift_schedulable=true openshift_hostname=10.1.1.x openshift_ip=10.1.1.x openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
-
-#[glusterfs]
-#10.1.1.x glusterfs_ip=10.1.1.x glusterfs_devices='[ "/dev/vdb" ]'
-#10.1.1.x glusterfs_ip=10.1.1.x glusterfs_devices='[ "/dev/vdb" ]'
-#10.1.1.x glusterfs_ip=10.1.1.x glusterfs_devices='[ "/dev/vdb" ]'
