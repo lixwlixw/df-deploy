@@ -6,7 +6,7 @@ lb
 glusterfs
 
 [OSEv3:vars]
-#login vm
+##login vm
 ansible_ssh_user=ocdf
 ansible_become=true
 deployment_type=origin
